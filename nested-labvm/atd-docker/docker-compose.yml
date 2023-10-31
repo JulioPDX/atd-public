@@ -290,8 +290,9 @@ services:
     restart: "unless-stopped"
   influxdb:
     image: influxdb:2.7.3
-    # volumes:
-      # - influxdb-storage:/var/lib/influxdb2:rw
+    container_name: atd-influxdb
+    volumes:
+      - influxdb-storage:/var/lib/influxdb2:rw
       # - /etc/atd:/etc/atd:ro
     env_file:
       - $PWD/tig/.env
@@ -304,6 +305,7 @@ services:
 
   telegraf:
     image: telegraf:1.28.3
+    container_name: atd-telegraf
     volumes:
       - $PWD/tig/telegraf.conf:/etc/telegraf/telegraf.conf:ro
       - $PWD/tig/telegraf.d:/etc/telegraf/telegraf.d
@@ -315,6 +317,7 @@ services:
 
   grafana:
     image: grafana/grafana-oss:10.2.0
+    container_name: atd-grafana
     environment:
       GF_SECURITY_ADMIN_USER: arista
       GF_SECURITY_ADMIN_PASSWORD: arista
