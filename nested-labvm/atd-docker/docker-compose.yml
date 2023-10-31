@@ -288,6 +288,51 @@ services:
     volumes:
       - "postgres_data:/var/lib/postgresql/data"
     restart: "unless-stopped"
+  influxdb:
+    image: influxdb:2.7.3
+    # volumes:
+      # - influxdb-storage:/var/lib/influxdb2:rw
+      # - /etc/atd:/etc/atd:ro
+    env_file:
+      - $PWD/tig/.env
+    entrypoint: ["./entrypoint.sh"]
+    restart: on-failure:10
+    ports:
+      - 8086:8086
+    networks:
+      - atd_nginx
+
+  telegraf:
+    image: telegraf:1.28.3
+    volumes:
+      - $PWD/tig/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - $PWD/tig/telegraf.d:/etc/telegraf/telegraf.d
+    command: ["telegraf", "--config-directory", "/etc/telegraf/telegraf.d"]
+    env_file:
+      - $PWD/tig/.env
+    depends_on:
+      - influxdb
+
+  grafana:
+    image: grafana/grafana-oss:10.2.0
+    environment:
+      GF_SECURITY_ADMIN_USER: arista
+      GF_SECURITY_ADMIN_PASSWORD: arista
+      GF_INSTALL_PLUGINS: natel-discrete-panel
+      GF_PATHS_PROVISIONING: /etc/grafana/provisioning
+    volumes:
+      - $PWD/tig/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml:ro
+      - $PWD/tig/dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro
+      - $PWD/tig/dashboards:/var/tmp/dashboards
+      - grafana-storage:/var/lib/grafana:rw
+      # - /etc/atd:/etc/atd:ro
+    depends_on:
+      - influxdb
+    ports:
+      - 3000:3000
+    networks:
+      - atd_nginx
+
 networks:
   atd_nginx:
 volumes:
@@ -298,3 +343,5 @@ volumes:
   nginx_log:
   postgres_data:
   nautobot:
+  grafana-storage:
+  influxdb-storage:
