@@ -313,7 +313,7 @@ services:
     env_file:
       - $PWD/tig/.env
     depends_on:
-      - influxdb
+      - atd-influxdb
 
   grafana:
     image: grafana/grafana-oss:10.2.0
@@ -330,7 +330,7 @@ services:
       - grafana-storage:/var/lib/grafana:rw
       # - /etc/atd:/etc/atd:ro
     depends_on:
-      - influxdb
+      - atd-influxdb
     ports:
       - 3000:3000
     networks:
