@@ -1,16 +1,14 @@
 apiVersion: 1
+
 datasources:
-  - name: influxdb
+  - name: InfluxDB_v2_Flux
     type: influxdb
     access: proxy
-    orgId: 1
     url: http://influxdb:8086
-    password: arista123!
-    user: arista
-    database: arista
-    basicAuth: false
-    basicAuthUser:
-    basicAuthPassword:
-    withCredentials:
-    isDefault: true
-    editable: true
+    jsonData:
+      version: Flux
+      organization: arista
+      defaultBucket: arista
+      tlsSkipVerify: true
+    secureJsonData:
+      token: chancbb781ff57c68f312337d71382953f0027f2697759294b8868ae98e29df35161geme
