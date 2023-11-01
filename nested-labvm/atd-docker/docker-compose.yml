@@ -327,6 +327,7 @@ services:
       - $PWD/tig/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml:ro
       - $PWD/tig/dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro
       - $PWD/tig/dashboards:/var/tmp/dashboards
+      - $PWD/tig/grafana/grafana.ini:/etc/grafana/grafana.ini
       - grafana-storage:/var/lib/grafana:rw
       # - /etc/atd:/etc/atd:ro
     depends_on:
