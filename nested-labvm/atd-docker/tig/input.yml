@@ -5,7 +5,7 @@ grafana:
 telegraf:
   gnmi:
     username: arista
-    password: aristadlpy
+    password: aristaisw3
     port: 6030
   devices:
     s1-spine1:
