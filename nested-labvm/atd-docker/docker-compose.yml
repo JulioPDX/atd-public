@@ -302,19 +302,16 @@ services:
       - 8086:8086
     networks:
       - atd_nginx
-
   telegraf:
     image: telegraf:1.28.3
     container_name: atd-telegraf
     volumes:
-      - $PWD/tig/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-      - $PWD/tig/telegraf.d:/etc/telegraf/telegraf.d
+      - $PWD/tig/telegraf.d/telegraf.conf:/etc/telegraf/telegraf.conf:ro
     command: ["telegraf", "--config-directory", "/etc/telegraf/telegraf.d"]
     env_file:
       - $PWD/tig/.env
     depends_on:
       - influxdb
-
   grafana:
     image: grafana/grafana-oss:10.2.0
     container_name: atd-grafana
