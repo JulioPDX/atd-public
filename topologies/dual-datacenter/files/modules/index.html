@@ -31,7 +31,7 @@
   <body>
     <div id="content">
       <h1>Arista Test Drive | {{ MOD_NAME }}</h1>
-      <img src="{{ MOD_IMG }}" usemap="#image_map">
+      <div class="scroll-image"><img src="{{ MOD_IMG }}" usemap="#image_map"></div>
       <div class="detail" style="display: none;" id="hint">Click on the node for access:</div>
       <map name="image_map">
         {% for node in NODES %}
