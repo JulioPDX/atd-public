@@ -8182,4 +8182,8 @@ a.text-dark:focus, a.text-dark:hover {
 .invisible {
   visibility: hidden !important;
 }
+
+.scroll-image {
+  overflow: auto;
+}
 /*# sourceMappingURL=bootstrap.css.map */
